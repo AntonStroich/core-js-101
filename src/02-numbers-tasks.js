@@ -116,8 +116,24 @@ function getLinearEquationRoot(a, b) {
  *   (0,1) (0,1)     => 0
  *   (0,1) (1,2)     => 0
  */
-function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
-  throw new Error('Not implemented');
+function getAngleBetweenVectors(x1, y1, x2, y2) {
+  // Dot product of two vectors
+  const dotProduct = x1 * x2 + y1 * y2;
+
+  // Magnitude (length) of the first vector. We use the Pythagorean theorem to calculate the length.
+  const magnitude1 = Math.sqrt(x1 * x1 + y1 * y1);
+
+  // Magnitude (length) of the second vector.
+  const magnitude2 = Math.sqrt(x2 * x2 + y2 * y2);
+
+  // Cosine of the angle between the two vectors.
+  const cosTheta = dotProduct / (magnitude1 * magnitude2);
+
+  // To prevent rounding errors, we clamp the cosine value between -1 and 1.
+  const clampedCosTheta = Math.max(-1, Math.min(1, cosTheta));
+
+  // Calculate the angle in radians using the arccosine function.
+  return Math.acos(clampedCosTheta);
 }
 
 /**
@@ -132,8 +148,8 @@ function getAngleBetweenVectors(/* x1, y1, x2, y2 */) {
  *     5     => 5
  *     0     => 0
  */
-function getLastDigit(/* value */) {
-  throw new Error('Not implemented');
+function getLastDigit(value) {
+  return Number(value.toString().at(-1));
 }
 
 
@@ -148,8 +164,8 @@ function getLastDigit(/* value */) {
  *     '37'     => 37
  * '-525.5'     => -525.5
  */
-function parseNumberFromString(/* value */) {
-  throw new Error('Not implemented');
+function parseNumberFromString(value) {
+  return parseFloat(value);
 }
 
 /**
