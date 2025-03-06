@@ -62,8 +62,34 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...coefficients) {
+  // If no coefficients are passed, return null
+  if (coefficients.length === 0) {
+    return null;
+  }
+
+  // If only one coefficient is passed, return a function that always returns that coefficient
+  if (coefficients.length === 1) {
+    return function () {
+      return coefficients[0]; // The result is always the single coefficient, no dependency on x
+    };
+  }
+
+  // If more than one coefficient is passed,
+  // return a function that calculates the polynomial value based on x
+  return function (x) {
+    let result = 0;
+
+    // Loop through the coefficients and calculate the polynomial value
+    for (let i = 0; i < coefficients.length; i += 1) {
+      // Add the term corresponding to the current coefficient
+      // Calculate each term using the exponent of x
+      result += coefficients[i] * x ** (coefficients.length - i - 1);
+    }
+
+    // Return the result of the polynomial evaluation for the given x
+    return result;
+  };
 }
 
 
