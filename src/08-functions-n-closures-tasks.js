@@ -203,8 +203,12 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  // Return a new function that takes the remaining arguments
+  return function (...newArgs) {
+    // Call the original function with both fixed and new arguments
+    return fn(...args1, ...newArgs);
+  };
 }
 
 
@@ -225,8 +229,13 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  let currentId = startFrom; // Declare the variable that will hold the current ID
+  return () => {
+    const id = currentId;
+    currentId += 1;
+    return id;
+  }; // Return the current ID and increment it after the return
 }
 
 
