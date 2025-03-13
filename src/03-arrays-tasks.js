@@ -472,10 +472,11 @@ function sortCitiesArray(arr) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  // Create a row of length 'n', where the value at index 'j' is 1 if 'i === j', otherwise 0.
+  // eslint-disable-next-line max-len
+  return Array.from({ length: n }, (_, i) => Array.from({ length: n }, (__, j) => (j === i ? 1 : 0)));
 }
-
 /**
  * Creates an array of integers from the specified start to end (inclusive)
  *
@@ -489,8 +490,10 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  // Use Array.from to create an array with the correct length (end - start + 1)
+  // We add `index` to the `start` value to generate the range
+  return Array.from({ length: (end - start + 1) }, (_, index) => start + index);
 }
 
 /**
@@ -504,8 +507,10 @@ function getIntervalArray(/* start, end */) {
  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
  */
-function distinct(/* arr */) {
-  throw new Error('Not implemented');
+function distinct(arr) {
+  // Create a Set from the array, which automatically removes duplicates
+  // The spread operator (...) is used to convert the Set back into an array
+  return [...new Set(arr)];
 }
 
 /**
