@@ -201,8 +201,24 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  // Ensure width and height are at least 2, otherwise, it's impossible to form a valid rectangle.
+  if (width < 2 || height < 2) {
+    throw new Error('Width and height should be more than 2');
+  }
+
+  // Create the top border: "┌" followed by (width - 2) dashes "─", ending with "┐"
+  const top = `┌${'─'.repeat(width - 2)}┐\n`;
+
+  // Create the middle rows: "│" followed by (width - 2) spaces, ending with "│"
+  // This row is repeated (height - 2) times to match the height of the rectangle.
+  const middle = `│${' '.repeat(width - 2)}│\n`.repeat(height - 2);
+
+  // Create the bottom border: "└" followed by (width - 2) dashes "─", ending with "┘"
+  const bottom = `└${'─'.repeat(width - 2)}┘\n`;
+
+  // Concatenate all parts to form the final rectangle string.
+  return top + middle + bottom;
 }
 
 
@@ -222,8 +238,20 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  // Replace each letter in the string with its ROT13 counterpart
+  return str.replace(/[A-Za-z]/g, (char) => {
+    // Determine if the character is uppercase or lowercase
+    // 'A' (uppercase) has char code 65, 'a' (lowercase) has char code 97
+    const base = char <= 'Z' ? 65 : 97;
+
+    // Convert character to its new ROT13 equivalent:
+    // 1. Get its position in the alphabet: (char.charCodeAt(0) - base)
+    // 2. Shift it by 13 positions: + 13
+    // 3. Ensure it wraps around using modulo: % 26
+    // 4. Convert back to ASCII value by adding base
+    return String.fromCharCode(((char.charCodeAt(0) - base + 13) % 26) + base);
+  });
 }
 
 /**
