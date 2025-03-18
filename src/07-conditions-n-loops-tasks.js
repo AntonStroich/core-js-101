@@ -240,8 +240,19 @@ function findFirstSingleChar(str) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  // Ensure the smaller number comes first
+  const start = Math.min(a, b);
+  const end = Math.max(a, b);
+
+  // Determine the opening bracket: '[' if start is included, '(' if excluded
+  const startBracket = isStartIncluded ? '[' : '(';
+
+  // Determine the closing bracket: ']' if end is included, ')' if excluded
+  const endBracket = isEndIncluded ? ']' : ')';
+
+  // Return the formatted interval string
+  return `${startBracket}${start}, ${end}${endBracket}`;
 }
 
 
@@ -257,8 +268,13 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  // Convert the string into an array of characters
+  return str.split('')
+  // Reverse the order of elements in the array
+    .reverse()
+  // Join the array elements back into a string
+    .join('');
 }
 
 
@@ -274,8 +290,18 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function reverseInteger(num) {
+  // Convert back to number
+  return Number(
+    // Convert the number into a string
+    String(num)
+    // Convert the string into an array of characters
+      .split('')
+    // Reverse the order of elements in the array
+      .reverse()
+    // Join the array elements back into a string
+      .join(''),
+  );
 }
 
 
