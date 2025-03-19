@@ -325,8 +325,37 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  // Convert the credit card number to a string and split it into an array of digits
+  const digits = ccn.toString().split('').map((item) => Number(item));
+
+  let sum = 0;
+  let shouldDouble = false;
+
+  // Iterate through the digits in reverse order (from right to left)
+  for (let i = digits.length - 1; i >= 0; i -= 1) {
+    let digit = digits[i];
+
+    // If the flag is true, double the digit
+    if (shouldDouble) {
+      digit *= 2;
+    }
+
+    // If the doubled value is greater than 9, subtract 9 (as per the Luhn algorithm)
+
+    if (digit > 9) {
+      digit -= 9;
+    }
+
+    // Add the processed digit to the sum
+    sum += digit;
+
+    // Toggle the flag to double the next digit on the next iteration
+    shouldDouble = !shouldDouble;
+  }
+
+  // If the sum is divisible by 10, the credit card number is valid
+  return sum % 10 === 0;
 }
 
 /**
@@ -343,8 +372,23 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function getDigitalRoot(num) {
+  // Function to calculate the sum of digits
+  const calculateDigitsSum = (number) => number.toString()
+    .split('')
+    .map((item) => Number(item))
+    .reduce((accumulator, current) => accumulator + current);
+
+  // Step 1: Calculate the sum of the digits
+  let digitsSum = calculateDigitsSum(num);
+
+  // Step 2: If the sum is greater than 9, repeat the step (sum of digits again)
+  if (digitsSum > 9) {
+    digitsSum = calculateDigitsSum(digitsSum);
+  }
+
+  // Return the final sum (digital root)
+  return digitsSum;
 }
 
 
