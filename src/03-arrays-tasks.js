@@ -543,8 +543,25 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  return array.reduce((map, item) => {
+    // Extract the key using the keySelector function
+    const key = keySelector(item);
+
+    // Extract the value using the valueSelector function
+    const value = valueSelector(item);
+
+    // If the key does not exist in the map, initialize an empty array for it
+    if (!map.has(key)) {
+      map.set(key, []);
+    }
+
+    // Add the extracted value to the array corresponding to the key
+    map.get(key).push(value);
+
+    // Return the updated map to the next iteration of reduce
+    return map;
+  }, new Map()); // Initialize an empty Map to store the grouped results
 }
 
 
@@ -561,8 +578,11 @@ function group(/* array, keySelector, valueSelector */) {
  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
  *   ['one','two','three'], (x) => x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
  */
-function selectMany(/* arr, childrenSelector */) {
-  throw new Error('Not implemented');
+function selectMany(arr, childrenSelector) {
+  // flatMap is used instead of map + flat(1)
+  // 1. map() applies childrenSelector to each element, producing an array of arrays.
+  // 2. flatMap() automatically flattens the result to avoid nested arrays.
+  return arr.flatMap(childrenSelector);
 }
 
 
