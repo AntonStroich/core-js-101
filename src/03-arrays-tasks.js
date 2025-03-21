@@ -598,8 +598,19 @@ function selectMany(arr, childrenSelector) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  // Use the reduce method to traverse the array along the given indexes
+  return indexes.reduce(
+    /**
+     * The reducer function takes two parameters:
+     * @param {any} accumulator - Stores the current level of the array (starts as arr).
+     * @param {number} current - The current index from the indexes array.
+     * @return {any} The nested array or final element at the given index.
+     */
+    (accumulator, current) => accumulator[current],
+    // The initial value for the accumulator is the input array itself.
+    arr,
+  );
 }
 
 
