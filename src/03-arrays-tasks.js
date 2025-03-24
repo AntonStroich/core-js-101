@@ -632,8 +632,16 @@ function getElementByIndexes(arr, indexes) {
  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  const { length } = arr; // Get the length of the array
+  const middleIndex = Math.floor(length / 2); // Find the middle index
+
+  if (length % 2 === 0) {
+    // If the length is even, simply swap the two halves
+    return [...arr.slice(middleIndex), ...arr.slice(0, middleIndex)];
+  }
+  // If the length is odd, keep the middle element in place
+  return [...arr.slice(middleIndex + 1), arr[middleIndex], ...arr.slice(0, middleIndex)];
 }
 
 
