@@ -413,8 +413,33 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  // Mapping of opening brackets to their corresponding closing brackets
+  const brasketsMap = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+    '<': '>',
+  };
+
+  // Stack to keep track of open brackets
+  const stack = [];
+
+  // Convert string to an array of characters
+  const chars = str.split('');
+
+  return chars.every((char) => {
+    if (brasketsMap[char]) {
+      // If the character is an opening bracket, push it onto the stack
+      stack.push(char);
+      return true; // Continue checking
+    }
+
+    // If it's a closing bracket, pop the last opened bracket from the stack
+    const lastOpen = stack.pop();
+    // Check if the last opened bracket matches the current closing bracket
+    return brasketsMap[lastOpen] === char;
+  }) && stack.length === 0; // Ensure no unmatched opening brackets remain in the stack
 }
 
 
