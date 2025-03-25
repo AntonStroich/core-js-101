@@ -463,8 +463,9 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  // Convert the number to the specified base using the built-in toString(n) method
+  return num.toString(n);
 }
 
 
@@ -480,8 +481,32 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  // If no paths are provided, return an empty string
+  if (pathes.length === 0) {
+    return '';
+  }
+
+  // Split each path into an array of directory parts
+  const splittedPathes = pathes.map((item) => item.split('/'));
+
+  // Find the shortest path (to avoid checking beyond the shortest length)
+  const minLength = Math.min(...splittedPathes.map((item) => item.length));
+
+  const commonPath = splittedPathes[0]
+    .slice(0, minLength) // Limit to the shortest path's length to avoid index errors
+    .reduce((accumulator, segment, index) => (
+      // Check if every path has the same segment at the current index
+      splittedPathes.every(
+        (item) => item[index] === segment,
+      )
+        ? [...accumulator, segment] // If yes, add the segment to the result array
+        : accumulator), // If not, return the accumulated common path as is
+    []); // Start with an empty array
+
+  // If commonPath is not empty, join segments with '/' and add trailing slash
+  return commonPath.length ? `${commonPath.join('/')}/` : '';
+  // If there's no common directory, return an empty string
 }
 
 
